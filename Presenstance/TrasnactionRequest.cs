@@ -1,0 +1,19 @@
+﻿namespace Presenstance
+{
+    public class TrasnactionRequest
+    {
+        public Guid Id { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+
+        public DateTime NumberOfRetries { get; set; }
+
+        public DateTime LastRetryOn { get; set; }
+
+        public string LastResponseMessage { get; set; }
+
+        public DateTime NexSendOn { get; set; }
+
+        public string Payload { get; set; }
+    }
+}
