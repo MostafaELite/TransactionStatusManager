@@ -1,6 +1,6 @@
 ﻿namespace Presenstance
 {
-    public class TrasnactionRequest
+    public class TransactionInfo
     {
         public Guid Id { get; set; }
 

@@ -1,8 +1,8 @@
 ﻿namespace Presenstance
 {
-    public class IRepo
+    public class TransactionInfoRepo
     {
-        public IEnumerable<TrasnactionRequest> GetToBeExecutedJobs()
+        public IEnumerable<TransactionInfo> GetToBeExecutedJobs()
         {
             throw new NotImplementedException();
         }

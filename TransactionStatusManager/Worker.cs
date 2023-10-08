@@ -5,9 +5,9 @@ namespace TransactionStatusManager
     public class Worker : BackgroundService
     {
         private readonly ILogger<Worker> _logger;
-        private readonly IRepo repo;
+        private readonly TransactionInfoRepo repo;
 
-        public Worker(ILogger<Worker> logger, IRepo repo)
+        public Worker(ILogger<Worker> logger, TransactionInfoRepo repo)
         {
             _logger = logger;
             this.repo = repo;
@@ -17,13 +17,16 @@ namespace TransactionStatusManager
         {
             while (!stoppingToken.IsCancellationRequested)
             {
+                _logger.LogInformation("Getting jobs to run: {time}", DateTimeOffset.Now);
                 var requestsToBeSent = repo.GetToBeExecutedJobs();
+
                 foreach (var request in requestsToBeSent)
                 {
                     //Do Send Request Logic here
                 }
-                _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                await Task.Delay(1000, stoppingToken);
+
+                _logger.LogInformation("Worker going to sleep at: {time}", DateTimeOffset.Now);
+                await Task.Delay(TimeSpan.FromMinutes(5), stoppingToken);
             }
         }
     }
