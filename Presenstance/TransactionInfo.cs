@@ -10,10 +10,10 @@
 
         public DateTime LastRetryOn { get; set; }
 
-        public string LastResponseMessage { get; set; }
+        public string? LastResponseMessage { get; set; }
 
-        public DateTime NexSendOn { get; set; }
+        public DateTime? NexSendOn { get; set; }
 
-        public string Payload { get; set; }
+        public required string Payload { get; set; }
     }
 }

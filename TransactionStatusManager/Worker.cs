@@ -18,7 +18,7 @@ namespace TransactionStatusManager
             while (!stoppingToken.IsCancellationRequested)
             {
                 _logger.LogInformation("Getting jobs to run: {time}", DateTimeOffset.Now);
-                var requestsToBeSent = repo.GetToBeExecutedJobs();
+                var requestsToBeSent = await repo.GetRequestsToBeSent();
 
                 foreach (var request in requestsToBeSent)
                 {
