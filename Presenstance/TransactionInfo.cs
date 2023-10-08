@@ -12,7 +12,7 @@
 
         public string? LastResponseMessage { get; set; }
 
-        public DateTime? NexSendOn { get; set; }
+        public DateTime? NextSendOn { get; set; }
 
         public required string Payload { get; set; }
     }

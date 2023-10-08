@@ -10,7 +10,7 @@ namespace Presenstance
 
         public async Task<IEnumerable<TransactionInfo>> GetRequestsToBeSent()
         {
-            var jobs = db.TransactionInfo.Where(transaction => transaction.NexSendOn <= DateTime.Now || transaction.NexSendOn == null);
+            var jobs = db.TransactionInfo.Where(transaction => transaction.NextSendOn <= DateTime.Now || transaction.NextSendOn == null);
             return await jobs.ToArrayAsync();
         }
     }
