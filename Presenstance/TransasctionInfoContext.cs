@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Reflection.Metadata;
 
 namespace Presenstance
 {
@@ -9,5 +10,22 @@ namespace Presenstance
         }
 
         public DbSet<TransactionInfo> TransactionInfo { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {          
+            var testData = new[]
+            {
+                new TransactionInfo { Id = Guid.NewGuid(), CreatedOn = DateTime.Now, Payload ="Test Payload"},
+                new TransactionInfo { Id = Guid.NewGuid(), CreatedOn = DateTime.Now, Payload ="Test Payload"},
+                new TransactionInfo { Id = Guid.NewGuid(), CreatedOn = DateTime.Now, Payload ="Test Payload"},
+                new TransactionInfo { Id = Guid.NewGuid(), CreatedOn = DateTime.Now, Payload ="Test Payload"},
+                new TransactionInfo { Id = Guid.NewGuid(), CreatedOn = DateTime.Now, Payload ="Test Payload"},
+                new TransactionInfo { Id = Guid.NewGuid(), CreatedOn = DateTime.Now, Payload ="Test Payload"},
+                new TransactionInfo { Id = Guid.NewGuid(), CreatedOn = DateTime.Now, Payload ="Test Payload"}
+            };
+
+            modelBuilder.Entity<TransactionInfo>()
+                .HasData(testData);
+        }
     }
 }

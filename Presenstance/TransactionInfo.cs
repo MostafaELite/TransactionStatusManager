@@ -6,7 +6,7 @@
 
         public DateTime CreatedOn { get; set; }
 
-        public DateTime NumberOfRetries { get; set; }
+        public byte NumberOfRetries { get; set; }
 
         public DateTime LastRetryOn { get; set; }
 

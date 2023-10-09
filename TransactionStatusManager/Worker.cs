@@ -22,12 +22,19 @@ namespace TransactionStatusManager
 
                 foreach (var request in requestsToBeSent)
                 {
-                    //Do Send Request Logic here
+                    request.NextSendOn = CalculateNextRun(request);
                 }
 
                 _logger.LogInformation("Worker going to sleep at: {time}", DateTimeOffset.Now);
                 await Task.Delay(TimeSpan.FromMinutes(5), stoppingToken);
             }
+        }
+
+        private DateTime CalculateNextRun(TransactionInfo transaction)
+        {
+            const byte retryIntervalMultiplier = 2;
+            return DateTime.Now.AddMinutes(transaction.NumberOfRetries * retryIntervalMultiplier);
+
         }
     }
 }
