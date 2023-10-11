@@ -13,5 +13,14 @@ namespace Presenstance
             var jobs = db.TransactionInfo.Where(transaction => transaction.NextSendOn <= DateTime.Now || transaction.NextSendOn == null);
             return await jobs.ToArrayAsync();
         }
+
+        public async Task UpdateRequests(IEnumerable<TransactionInfo> updatedRequests)
+        {
+            if (!updatedRequests.Any())
+                return;
+
+            db.UpdateRange(updatedRequests);
+            await db.SaveChangesAsync();
+        }
     }
 }

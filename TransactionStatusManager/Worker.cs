@@ -15,26 +15,27 @@ namespace TransactionStatusManager
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            const byte RefreshInterval = 5;
             while (!stoppingToken.IsCancellationRequested)
             {
                 _logger.LogInformation("Getting jobs to run: {time}", DateTimeOffset.Now);
                 var requestsToBeSent = await repo.GetRequestsToBeSent();
 
-                foreach (var request in requestsToBeSent)
-                {
+                foreach (var request in requestsToBeSent)                
                     request.NextSendOn = CalculateNextRun(request);
-                }
+                
 
+                await repo.UpdateRequests(requestsToBeSent);
                 _logger.LogInformation("Worker going to sleep at: {time}", DateTimeOffset.Now);
-                await Task.Delay(TimeSpan.FromMinutes(5), stoppingToken);
+                await Task.Delay(TimeSpan.FromSeconds(RefreshInterval), stoppingToken);
             }
         }
 
         private DateTime CalculateNextRun(TransactionInfo transaction)
         {
             const byte retryIntervalMultiplier = 2;
-            return DateTime.Now.AddMinutes(transaction.NumberOfRetries * retryIntervalMultiplier);
+            return DateTime.Now.AddMinutes((transaction.NumberOfRetries + 1) * retryIntervalMultiplier);
 
         }
     }
-}
+}   
